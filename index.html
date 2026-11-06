@@ -1,221 +1,267 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="signal">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<title>راهنمای خاموش‌کننده</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap">
+<title>چیدمان خاموش‌کننده</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap">
 <style>
-:root{
-  --bg:var(--tg-theme-bg-color,#ffffff);
-  --tx:var(--tg-theme-text-color,#1b1b1b);
-  --hint:var(--tg-theme-hint-color,#6b6b6b);
-  --card:var(--tg-theme-secondary-bg-color,#f2f2f4);
-  --btn:var(--tg-theme-button-color,#c8102e);
-  --btn-tx:var(--tg-theme-button-text-color,#ffffff);
-  --red:#c8102e;
-  --line:rgba(128,128,128,.28);
-  font-family:"Vazirmatn",Tahoma,sans-serif;
-}
+:root{font-family:"Vazirmatn",Tahoma,sans-serif;--sa-t:env(safe-area-inset-top,0px);--sa-b:env(safe-area-inset-bottom,0px)}
+[data-theme=signal]{--bg:#f7f8fa;--sf:#ffffff;--tx:#14213d;--mu:#5d6679;--ac:#d7263d;--ac2:#ffffff;--ln:#14213d;--rad:6px;--bw:2px;--sh:none}
+[data-theme=night]{--bg:#0d1829;--sf:#16253b;--tx:#e8eef6;--mu:#93a3ba;--ac:#ffb000;--ac2:#1a1200;--ln:#2a3d58;--rad:16px;--bw:1px;--sh:0 8px 24px rgba(0,0,0,.35)}
+[data-theme=steel]{--bg:#e6ecef;--sf:#f5f8f9;--tx:#1d2b32;--mu:#58707b;--ac:#0b6e6e;--ac2:#ffffff;--ln:#c3d0d6;--rad:10px;--bw:1px;--sh:0 6px 18px rgba(29,43,50,.12)}
+[data-theme=green]{--bg:#fbfdfb;--sf:#eef7f1;--tx:#10281c;--mu:#4e6b5a;--ac:#00875a;--ac2:#ffffff;--ln:#cfe5d6;--rad:24px;--bw:1px;--sh:none}
 *{box-sizing:border-box}
-html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);line-height:1.9;font-size:15px}
-main{max-width:560px;margin:0 auto;padding:18px 16px 40px}
-h1{font-size:22px;font-weight:800;margin:0 0 4px}
-h2{font-size:16px;font-weight:800;margin:0 0 8px}
-.sub{color:var(--hint);margin:0 0 18px;font-size:13px}
-.bar{height:5px;background:var(--red);border-radius:3px;width:56px;margin-bottom:12px}
-label,.lab{display:block;font-weight:600;margin:16px 0 6px}
-select,input{width:100%;font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
-.help{color:var(--hint);font-size:13px;margin:6px 0 0}
-.chips{display:grid;gap:8px}
-.chip{display:flex;align-items:center;gap:10px;text-align:right;font:inherit;color:var(--tx);background:var(--card);border:2px solid transparent;border-radius:12px;padding:10px 12px;cursor:pointer;width:100%}
-.chip[aria-pressed="true"]{border-color:var(--red)}
-.chip b{display:block;font-size:14px}
-.chip small{color:var(--hint);font-size:12px;line-height:1.6}
-.sym{flex:none;width:34px;height:34px;display:block}
+html{padding-top:var(--sa-t)}
+body{margin:0;background:var(--bg);color:var(--tx);line-height:1.85;font-size:15px;transition:background .25s,color .25s}
+main{max-width:560px;margin:0 auto;padding:16px 16px calc(96px + var(--sa-b))}
+header h1{font-size:30px;font-weight:900;line-height:1.35;margin:12px 0 2px;letter-spacing:-.3px}
+header p{margin:0;color:var(--mu);font-size:13px}
+.strip{display:flex;gap:10px;align-items:center}
+.sym{width:26px;height:26px;display:block;flex:none}
 .sA{background:#1a9b4b;clip-path:polygon(50% 5%,95% 92%,5% 92%)}
 .sB{background:#d62828;clip-path:polygon(12% 12%,88% 12%,88% 88%,12% 88%)}
 .sC{background:#1f6fd1;border-radius:50%;transform:scale(.82)}
 .sD{background:#e8b400;clip-path:polygon(50% 2%,62% 36%,98% 38%,70% 60%,80% 96%,50% 75%,20% 96%,30% 60%,2% 38%,38% 36%)}
-.sK{background:#333;clip-path:polygon(25% 8%,75% 8%,98% 50%,75% 92%,25% 92%,2% 50%)}
+.sK{background:#4a4a4a;clip-path:polygon(25% 8%,75% 8%,98% 50%,75% 92%,25% 92%,2% 50%)}
+.themes{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.th{font:inherit;font-size:12.5px;font-weight:600;color:var(--tx);background:var(--sf);border:var(--bw) solid var(--ln);border-radius:999px;padding:4px 12px 4px 10px;display:flex;gap:7px;align-items:center;cursor:pointer}
+.th i{width:14px;height:14px;border-radius:50%;display:block}
+.th[aria-pressed=true]{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.tab{display:none}.tab.on{display:block}
+label,.lab{display:block;font-weight:700;margin:18px 0 6px}
+select,input{width:100%;font:inherit;color:var(--tx);background:var(--sf);border:var(--bw) solid var(--ln);border-radius:var(--rad);padding:11px 12px}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.help{color:var(--mu);font-size:13px;margin:6px 0 0}
+.chips{display:grid;gap:8px}
+.chip{display:flex;gap:12px;align-items:center;text-align:right;font:inherit;color:var(--tx);background:var(--sf);border:var(--bw) solid var(--ln);border-radius:var(--rad);padding:10px 12px;cursor:pointer;width:100%}
+.chip .sym{width:30px;height:30px}
+.chip b{display:block;font-size:14px}.chip small{color:var(--mu);font-size:12px;line-height:1.6}
+.chip[aria-pressed=true]{border-color:var(--ac);box-shadow:inset 0 0 0 2px var(--ac)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button.go{margin-top:22px;width:100%;font:inherit;font-weight:800;font-size:16px;border:0;border-radius:12px;padding:14px;background:var(--btn);color:var(--btn-tx);cursor:pointer}
-button.alt{font:inherit;font-weight:600;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:transparent;color:var(--tx);cursor:pointer;margin-top:10px}
-button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--red);outline-offset:2px}
-#out{margin-top:26px}
-.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px}
-.big{font-size:30px;font-weight:800;color:var(--red);line-height:1.3}
-.tag{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:0 10px;font-weight:600;direction:ltr;unicode-bidi:isolate}
-ul{margin:6px 0 0;padding:0 18px}
-li{margin-bottom:4px}
-.warn{border-right:5px solid var(--red)}
-.note{color:var(--hint);font-size:12.5px}
-details{margin-top:14px}
-summary{cursor:pointer;font-weight:600}
+.go{margin-top:22px;width:100%;font:inherit;font-weight:800;font-size:16px;border:0;border-radius:var(--rad);padding:14px;background:var(--ac);color:var(--ac2);cursor:pointer}
+.alt{font:inherit;font-weight:600;font-size:14px;border:var(--bw) solid var(--ln);border-radius:var(--rad);padding:9px 14px;background:transparent;color:var(--tx);cursor:pointer;margin:10px 0 0 8px}
+.card{background:var(--sf);border:var(--bw) solid var(--ln);border-radius:var(--rad);padding:14px;margin-top:12px;box-shadow:var(--sh)}
+.card h2{font-size:16px;font-weight:800;margin:0 0 6px}
+.card.w{border-right:6px solid var(--ac)}
+.big{font-size:32px;font-weight:900;color:var(--ac);line-height:1.3}
+.tag{display:inline-block;border:var(--bw) solid var(--ac);color:var(--ac);border-radius:8px;padding:0 10px;font-weight:800;direction:ltr;unicode-bidi:isolate}
+ul{margin:6px 0 0;padding:0 18px}li{margin-bottom:4px}
+.note{color:var(--mu);font-size:12.5px}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.item b{font-size:15px}.x{font:inherit;color:var(--ac);background:none;border:0;cursor:pointer;font-weight:700}
+nav{position:fixed;inset:auto 0 0 0;background:var(--sf);border-top:var(--bw) solid var(--ln);display:flex;padding-bottom:var(--sa-b);z-index:5}
+nav button{flex:1;font:inherit;font-weight:700;font-size:13.5px;color:var(--mu);background:none;border:0;padding:12px 4px;cursor:pointer;border-top:4px solid transparent}
+nav button[aria-selected=true]{color:var(--ac);border-top-color:var(--ac)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <main>
-  <div class="bar"></div>
-  <h1>راهنمای خاموش‌کننده</h1>
-  <p class="sub">انتخاب نوع، تعداد و محل نصب خاموش‌کننده برای هر مکان، بر پایه استاندارد NFPA 10</p>
+<header>
+  <div class="strip"><span class="sym sA"></span><span class="sym sB"></span><span class="sym sC"></span><span class="sym sD"></span><span class="sym sK"></span></div>
+  <h1>چیدمان<br>خاموش‌کننده</h1>
+  <p>بر پایه NFPA 10 · ابزار کارشناس HSE پالایشگاه</p>
+  <div class="themes" id="themes" role="group" aria-label="تم"></div>
+</header>
 
-  <label for="place">مکان شما چیست؟</label>
-  <select id="place"></select>
-
+<section class="tab on" id="t1">
+  <label for="name">نام محل (اختیاری)</label>
+  <input id="name" type="text" placeholder="مثلاً ساختمان اداری شماره ۲">
+  <label for="zone">نوع محل</label>
+  <select id="zone"></select>
+  <p class="help" id="opNote"></p>
   <label for="hazard">میزان خطر آتش‌سوزی</label>
   <select id="hazard"></select>
   <p class="help" id="hazardHelp"></p>
-
-  <div class="lab">چه چیزهایی در آن مکان هست؟ (چند مورد را می‌توانید انتخاب کنید)</div>
+  <div class="lab">چه چیزهایی در آن محل هست؟</div>
   <div class="chips" id="chips"></div>
-
   <div class="row">
-    <div><label for="area">مساحت هر طبقه (متر مربع)</label>
-    <input id="area" type="text" inputmode="decimal" placeholder="مثلاً ۸۰"></div>
-    <div><label for="floors">تعداد طبقه</label>
-    <input id="floors" type="text" inputmode="numeric" value="1"></div>
+    <div><label for="area">مساحت هر طبقه (m²)</label><input id="area" type="text" inputmode="decimal" placeholder="مثلاً ۴۵۰"></div>
+    <div><label for="floors">تعداد طبقه</label><input id="floors" type="text" inputmode="numeric" value="1"></div>
   </div>
-
-  <details>
-    <summary>تنظیمات پیشرفته</summary>
-    <label for="rate">رتبه A روی برچسب خاموش‌کننده‌ای که دارید یا می‌خرید</label>
-    <select id="rate">
-      <option value="0">نمی‌دانم (حداقل لازم را حساب کن)</option>
-      <option value="2">2-A</option><option value="3">3-A</option><option value="4">4-A</option>
-      <option value="6">6-A</option><option value="10">10-A</option>
-    </select>
-  </details>
-
+  <label for="rate">رتبه A روی برچسب خاموش‌کننده</label>
+  <select id="rate"><option value="0">نمی‌دانم (حداقل لازم)</option><option value="2">2-A</option><option value="3">3-A</option><option value="4">4-A</option><option value="6">6-A</option><option value="10">10-A</option></select>
   <button class="go" id="go">محاسبه کن</button>
   <div id="out" aria-live="polite"></div>
+</section>
+
+<section class="tab" id="t2">
+  <div id="list"></div>
+</section>
+
+<section class="tab" id="t3">
+  <div class="card"><h2>محل نصب</h2><ul id="gPlace"></ul></div>
+  <div class="card"><h2>نگهداری و بازرسی</h2><ul id="gInsp"></ul></div>
+  <div class="card w"><h2>هنگام آتش‌سوزی</h2><ul>
+    <li>اول افراد را خارج کنید و اعلام حریق کنید (آتش‌نشانی ۱۲۵).</li>
+    <li>فقط اگر آتش کوچک است و راه فرار پشت سرتان باز است، خاموش‌کننده را به کار ببرید.</li>
+    <li>پین را بکشید، نازل را به ریشه آتش بگیرید، دسته را فشار دهید و از کنار به کنار جارو کنید.</li>
+    <li>آتش گاز را خاموش نکنید مگر جریان گاز قطع شود.</li></ul></div>
+  <p class="note" id="src"></p>
+</section>
 </main>
 
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-t="t1">محاسبه</button>
+  <button role="tab" aria-selected="false" data-t="t2" id="navList">لیست و گزارش</button>
+  <button role="tab" aria-selected="false" data-t="t3">راهنما</button>
+</nav>
+
 <script>
-/* ===== داده‌های استاندارد: برای تطبیق با متن NFPA 10:2026 فقط همین بخش را اصلاح کنید ===== */
+/* ===== داده‌های استاندارد: برای تطبیق با متن NFPA 10:2026 و استاندارد داخلی فقط این بخش را اصلاح کنید ===== */
 const DATA = {
-  ft: 0.3048,
-  maxAreaPerUnit_m2: 1045,          // سقف مساحت زیر پوشش هر خاموش‌کننده (کلاس A)
-  travelA_m: 22.9,                  // حداکثر مسافت پیمایش کلاس A
-  travelBnear_m: 9.1, travelBfar_m: 15.2,
-  travelD_m: 22.9, travelK_m: 9.1,
+  maxAreaPerUnit_m2: 1045,
+  travelA_m: 22.9, travelBnear_m: 9.1, travelBfar_m: 15.2, travelD_m: 22.9, travelK_m: 9.1,
   mount: { upTo40lb_m: 1.53, over40lb_m: 1.07, floorGap_cm: 10 },
   hazard: {
-    light:   { name:'کم', help:'مواد قابل اشتعال کم است؛ مثل خانه، اداره، مدرسه، مطب، هتل.', minA:2, areaPerA_m2:279, bFar:10 },
-    ordinary:{ name:'متوسط', help:'مواد قابل اشتعال متوسط است؛ مثل مغازه، رستوران، کارگاه سبک، پارکینگ، تعمیرگاه.', minA:2, areaPerA_m2:139, bFar:20 },
-    extra:   { name:'زیاد', help:'مواد قابل اشتعال زیاد یا آتش سریع‌گسترش است؛ مثل انبار مواد، رنگ‌کاری، کارگاه چوب با خاک اره زیاد، مواد شیمیایی.', minA:4, areaPerA_m2:93, bFar:80 }
+    light:   { name:'کم', help:'مواد قابل اشتعال کم؛ مثل اداره، درمانگاه، خوابگاه.', minA:2, areaPerA_m2:279, bFar:10 },
+    ordinary:{ name:'متوسط', help:'مواد قابل اشتعال متوسط؛ مثل انبار قطعات، کارگاه، پارکینگ، آشپزخانه، اتاق برق و کنترل.', minA:2, areaPerA_m2:139, bFar:20 },
+    extra:   { name:'زیاد', help:'مواد قابل اشتعال زیاد یا گسترش سریع آتش؛ مثل نواحی فرایندی، مخازن، پمپ‌خانه، بارگیری، مواد شیمیایی.', minA:4, areaPerA_m2:93, bFar:80 }
   },
   classes: {
-    A:{ t:'کلاس A: جامدات', d:'چوب، کاغذ، پارچه، پلاستیک، مبلمان' },
-    B:{ t:'کلاس B: مایعات و گازهای قابل اشتعال', d:'بنزین، حلال، رنگ، روغن موتور، گاز' },
-    C:{ t:'کلاس C: وسایل برقی روشن', d:'تابلو برق، دستگاه، کابل، موتور برقی' },
-    D:{ t:'کلاس D: فلزات قابل اشتعال', d:'منیزیم، تیتانیوم، پودر آلومینیوم، سدیم' },
-    K:{ t:'کلاس K: روغن و چربی پخت‌وپز', d:'سرخ‌کن، گریل، دیگ روغن، آشپزخانه تجاری' }
+    A:{ t:'کلاس A: جامدات', d:'چوب، کاغذ، پارچه، پلاستیک، عایق' },
+    B:{ t:'کلاس B: مایعات و گازهای قابل اشتعال', d:'نفتا، بنزین، حلال، رنگ، روغن، گاز' },
+    C:{ t:'کلاس C: تجهیزات برقی روشن', d:'تابلو برق، موتور، کابل، سرور' },
+    D:{ t:'کلاس D: فلزات قابل اشتعال', d:'منیزیم، تیتانیوم، سدیم، پودر آلومینیوم' },
+    K:{ t:'کلاس K: روغن و چربی پخت‌وپز', d:'سرخ‌کن، گریل، دیگ روغن' }
   },
-  places: [
-    { id:'home', n:'خانه یا آپارتمان', hz:'light', cl:['A','B','C'] },
-    { id:'office', n:'اداره، مدرسه، مطب', hz:'light', cl:['A','C'] },
-    { id:'shop', n:'مغازه یا فروشگاه', hz:'ordinary', cl:['A','C'] },
-    { id:'kitchen', n:'رستوران یا آشپزخانه تجاری', hz:'ordinary', cl:['A','C','K'] },
-    { id:'garage', n:'پارکینگ یا تعمیرگاه خودرو', hz:'ordinary', cl:['A','B','C'] },
-    { id:'workshop', n:'کارگاه (نجاری، جوشکاری، مکانیکی)', hz:'ordinary', cl:['A','B','C'] },
-    { id:'store', n:'انبار یا مکان با مواد زیاد', hz:'extra', cl:['A','B','C'] },
-    { id:'metal', n:'کارگاه فلزکاری با فلزات واکنش‌پذیر', hz:'extra', cl:['A','C','D'] },
-    { id:'other', n:'مکان دیگر (خودم انتخاب می‌کنم)', hz:'ordinary', cl:['A','C'] }
+  zones: [
+    { g:'ستادی و خدماتی', items:[
+      { id:'office', n:'ساختمان اداری', hz:'light', cl:['A','C'] },
+      { id:'meet', n:'سالن اجتماعات و آموزش', hz:'light', cl:['A','C'] },
+      { id:'clinic', n:'درمانگاه', hz:'light', cl:['A','C'] },
+      { id:'dorm', n:'خوابگاه و مهمانسرا', hz:'light', cl:['A','C'] },
+      { id:'canteen', n:'آشپزخانه و غذاخوری', hz:'ordinary', cl:['A','C','K'] },
+      { id:'wh', n:'انبار قطعات و کالا', hz:'ordinary', cl:['A','C'] },
+      { id:'park', n:'پارکینگ و گاراژ', hz:'ordinary', cl:['A','B','C'] },
+      { id:'shop', n:'کارگاه (مکانیک، جوشکاری، برق)', hz:'ordinary', cl:['A','B','C'] }
+    ]},
+    { g:'برق و کنترل', items:[
+      { id:'srv', n:'اتاق سرور و ارتباطات', hz:'light', cl:['A','C'] },
+      { id:'ctl', n:'اتاق کنترل', hz:'ordinary', cl:['A','C'] },
+      { id:'sub', n:'پست و اتاق برق (MCC)', hz:'ordinary', cl:['A','C'] },
+      { id:'bat', n:'اتاق باتری و UPS', hz:'ordinary', cl:['A','C'] }
+    ]},
+    { g:'عملیاتی', op:true, items:[
+      { id:'proc', n:'واحد فرایندی و کوره', hz:'extra', cl:['A','B','C'] },
+      { id:'pump', n:'پمپ‌خانه', hz:'extra', cl:['A','B','C'] },
+      { id:'comp', n:'ایستگاه کمپرسور', hz:'extra', cl:['A','B','C'] },
+      { id:'tank', n:'منطقه مخازن', hz:'extra', cl:['A','B'] },
+      { id:'load', n:'جایگاه بارگیری و تخلیه', hz:'extra', cl:['A','B','C'] },
+      { id:'lab', n:'آزمایشگاه', hz:'ordinary', cl:['A','B','C'] },
+      { id:'chem', n:'انبار مواد شیمیایی و کاتالیست', hz:'extra', cl:['A','B','C'] }
+    ]},
+    { g:'سایر', items:[ { id:'other', n:'محل دیگر (خودم انتخاب می‌کنم)', hz:'ordinary', cl:['A','C'] } ]}
   ],
+  opNote:'برای نواحی عملیاتی، علاوه بر خاموش‌کننده قابل حمل، خاموش‌کننده چرخ‌دار و سیستم‌های ثابت (فوم، آب‌پاش، گازی) و استاندارد داخلی پالایشگاه باید جداگانه بررسی شود. NFPA 10 فقط خاموش‌کننده‌های دستی و چرخ‌دار را پوشش می‌دهد.',
   inspect: [
-    'بازرسی چشمی ماهانه: وجود در جای خود، دسترسی آزاد، عقربه فشارسنج در ناحیه سبز، پین و مهر سالم.',
+    'بازرسی چشمی ماهانه: وجود در جای خود، دسترسی آزاد، فشارسنج در ناحیه سبز، پین و مهر سالم.',
     'سرویس و بازرسی فنی سالانه توسط فرد صلاحیت‌دار.',
     'آزمون هیدرواستاتیک و شارژ مجدد طبق نوع و تاریخ روی برچسب.',
     'در ویرایش ۲۰۲۶ پایش الکترونیکی می‌تواند جایگزین بازرسی چشمی شود، به شرط تأیید مرجع ذی‌صلاح.'
-  ]
+  ],
+  source:'مبنا: آخرین نگارش NFPA 10 ویرایش ۲۰۲۶ است، ولی جدول‌های عددی این برنامه بر پایه نسخه‌های قبلی است و باید با متن ۲۰۲۶ و استانداردهای داخلی پالایشگاه تطبیق داده شود. این ابزار جایگزین طراحی و تأیید کارشناس ایمنی نیست.'
 };
+const THEMES=[{id:'signal',n:'سیگنال',c:'#d7263d',bg:'#f7f8fa'},{id:'night',n:'شب‌کار',c:'#ffb000',bg:'#0d1829'},{id:'steel',n:'فولاد',c:'#0b6e6e',bg:'#e6ecef'},{id:'green',n:'ایمن',c:'#00875a',bg:'#fbfdfb'}];
 /* ===== پایان داده‌ها ===== */
 
-try{ const tg=window.Telegram.WebApp; tg.ready(); tg.expand(); }catch(e){}
-
+let tg=null; try{ tg=window.Telegram.WebApp; tg.ready(); tg.expand(); }catch(e){}
 const $=id=>document.getElementById(id);
 const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]).replace('.','٫');
 const norm=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace('٫','.').replace(',','.').trim();
-const sel=new Set();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const allZones=DATA.zones.flatMap(g=>g.items.map(i=>({...i,op:!!g.op})));
+const sel=new Set(); let entries=store.get('hse_ext_entries',[]); let current=null;
 
-DATA.places.forEach(p=>{ const o=document.createElement('option'); o.value=p.id; o.textContent=p.n; $('place').appendChild(o); });
+/* تم */
+function applyTheme(id){ const t=THEMES.find(x=>x.id===id)||THEMES[0]; document.documentElement.dataset.theme=t.id; store.set('hse_ext_theme',t.id);
+  document.querySelectorAll('.th').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===t.id));
+  try{ tg.setHeaderColor(t.bg); tg.setBackgroundColor(t.bg); }catch(e){} }
+THEMES.forEach(t=>{ const b=document.createElement('button'); b.type='button'; b.className='th'; b.dataset.id=t.id; b.innerHTML='<i style="background:'+t.c+'"></i>'+t.n; b.onclick=()=>applyTheme(t.id); $('themes').appendChild(b); });
+applyTheme(store.get('hse_ext_theme','signal'));
+
+/* فرم */
+DATA.zones.forEach(g=>{ const og=document.createElement('optgroup'); og.label=g.g; g.items.forEach(i=>{ const o=document.createElement('option'); o.value=i.id; o.textContent=i.n; og.appendChild(o); }); $('zone').appendChild(og); });
 Object.entries(DATA.hazard).forEach(([k,v])=>{ const o=document.createElement('option'); o.value=k; o.textContent=v.name; $('hazard').appendChild(o); });
-
-Object.entries(DATA.classes).forEach(([k,v])=>{
-  const b=document.createElement('button'); b.type='button'; b.className='chip'; b.dataset.k=k; b.setAttribute('aria-pressed','false');
-  b.innerHTML='<span class="sym s'+k+'"></span><span><b>'+v.t+'</b><small>'+v.d+'</small></span>';
-  b.onclick=()=>{ sel.has(k)?sel.delete(k):sel.add(k); paint(); };
-  $('chips').appendChild(b);
-});
+Object.entries(DATA.classes).forEach(([k,v])=>{ const b=document.createElement('button'); b.type='button'; b.className='chip'; b.dataset.k=k; b.setAttribute('aria-pressed','false');
+  b.innerHTML='<span class="sym s'+k+'"></span><span><b>'+v.t+'</b><small>'+v.d+'</small></span>'; b.onclick=()=>{ sel.has(k)?sel.delete(k):sel.add(k); paint(); }; $('chips').appendChild(b); });
 function paint(){ document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',sel.has(c.dataset.k))); $('hazardHelp').textContent=DATA.hazard[$('hazard').value].help; }
-function applyPlace(){ const p=DATA.places.find(x=>x.id===$('place').value); $('hazard').value=p.hz; sel.clear(); p.cl.forEach(c=>sel.add(c)); paint(); }
-$('place').onchange=applyPlace; $('hazard').onchange=paint; applyPlace();
+function applyZone(){ const z=allZones.find(x=>x.id===$('zone').value); $('hazard').value=z.hz; sel.clear(); z.cl.forEach(c=>sel.add(c)); $('opNote').textContent=z.op?DATA.opNote:''; paint(); }
+$('zone').onchange=applyZone; $('hazard').onchange=paint; applyZone();
 
-function calc(){
-  const out=$('out');
+/* راهنما */
+const m=DATA.mount;
+[ 'در مسیر خروج و نزدیک درها نصب کنید، دور از خود منبع خطر.',
+  'دسته خاموش‌کننده‌های تا ۱۸ کیلوگرم (۴۰ پوند) حداکثر '+fa(m.upTo40lb_m)+' متر از کف؛ سنگین‌تر حداکثر '+fa(m.over40lb_m)+' متر.',
+  'پایین خاموش‌کننده دست‌کم '+fa(m.floorGap_cm)+' سانتی‌متر از کف فاصله داشته باشد.',
+  'جلوی آن را با کالا نبندید، قفل نکنید و با تابلو مشخص کنید.',
+  'دمای محل با محدوده دمایی روی برچسب مطابقت داشته باشد.' ].forEach(t=>{ const li=document.createElement('li'); li.textContent=t; $('gPlace').appendChild(li); });
+DATA.inspect.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; $('gInsp').appendChild(li); });
+$('src').textContent=DATA.source;
+
+/* تب‌ها */
+function show(id){ document.querySelectorAll('.tab').forEach(s=>s.classList.toggle('on',s.id===id)); document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id)); window.scrollTo(0,0); if(id==='t2') renderList(); }
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.t));
+
+/* محاسبه */
+function compute(){
   const area=parseFloat(norm($('area').value)); const floors=Math.max(1,parseInt(norm($('floors').value))||1);
-  if(!(area>0)){ out.innerHTML='<div class="card warn">مساحت را به متر مربع وارد کنید.</div>'; return; }
-  if(sel.size===0){ out.innerHTML='<div class="card warn">دست‌کم یک مورد از فهرست «چه چیزهایی در آن مکان هست؟» را انتخاب کنید.</div>'; return; }
-  const H=DATA.hazard[$('hazard').value]; const hasA=sel.has('A'), hasB=sel.has('B'), hasC=sel.has('C'), hasD=sel.has('D'), hasK=sel.has('K');
-  const cover=r=>2*r*r; // مساحت مربع محافظه‌کارانه با شعاع مسافت پیمایش
-  const lines=[]; const html=[]; let main=null;
-
-  if(hasA||hasB||hasC){
-    const rA=Math.max(H.minA,parseInt($('rate').value)||0);
-    let cnt=1, parts=[], types='';
-    if(hasA){ const byRate=Math.ceil(area/Math.min(rA*H.areaPerA_m2,DATA.maxAreaPerUnit_m2)); const byDist=Math.ceil(area/cover(DATA.travelA_m)); cnt=Math.max(cnt,byRate,byDist); parts.push(rA+'-A'); }
-    if(hasB||(hasC&&!hasA)){ cnt=Math.max(cnt,Math.ceil(area/cover(DATA.travelBfar_m))); parts.push(H.bFar+'-B'); }
-    if(hasC) parts.push('C');
-    if(hasA&&!hasB&&!hasC) types='پودر شیمیایی ABC یا آب تحت فشار یا فوم';
-    else if(!hasA&&(hasB||hasC)&&!(hasB&&hasC)) types=hasC?'CO₂ یا پودر BC/ABC یا گاز پاک (Clean agent)':'پودر BC/ABC یا CO₂ یا فوم';
-    else types='پودر شیمیایی ABC (چندمنظوره، ساده‌ترین انتخاب)';
-    const label=parts.join(':'); const total=cnt*floors;
-    main={cnt,total,label,types};
-    html.push('<div class="card"><h2>خاموش‌کننده اصلی</h2><div class="big">'+fa(cnt)+' عدد در هر طبقه</div><p>جمعاً '+fa(total)+' عدد برای '+fa(floors)+' طبقه</p><p>نوع: <b>'+types+'</b></p><p>حداقل رتبه روی برچسب: <span class="tag">'+label+'</span></p><p class="note">هر طبقه جداگانه حساب شده و حتی در مساحت کم، در هر طبقه دست‌کم یک عدد لازم است.</p></div>');
-    lines.push('خاموش‌کننده اصلی: '+fa(cnt)+' عدد در هر طبقه (جمعاً '+fa(total)+')','نوع: '+types,'حداقل رتبه: '+label);
-    const rules=[];
-    if(hasA) rules.push('هیچ نقطه‌ای در طبقه نباید بیش از '+fa(DATA.travelA_m)+' متر مسیر پیمایش تا خاموش‌کننده کلاس A داشته باشد.');
-    if(hasB) rules.push('برای مایعات قابل اشتعال: خاموش‌کننده با رتبه '+fa(H.bFar)+'-B تا '+fa(DATA.travelBfar_m)+' متر، و رتبه پایین‌تر فقط تا '+fa(DATA.travelBnear_m)+' متر کاربرد دارد.');
-    if(hasC) rules.push('روی وسایل برقی روشن هرگز آب نزنید. از CO₂، پودر یا گاز پاک استفاده کنید.');
-    html.push('<div class="card"><h2>فاصله تا خاموش‌کننده</h2><ul>'+rules.map(r=>'<li>'+r+'</li>').join('')+'</ul></div>');
-    lines.push(...rules);
+  if(!(area>0)) return {err:'مساحت را به متر مربع وارد کنید.'};
+  if(sel.size===0) return {err:'دست‌کم یکی از موارد «چه چیزهایی در آن محل هست؟» را انتخاب کنید.'};
+  const z=allZones.find(x=>x.id===$('zone').value); const H=DATA.hazard[$('hazard').value];
+  const A=sel.has('A'),B=sel.has('B'),C=sel.has('C'),D=sel.has('D'),K=sel.has('K');
+  const cover=r=>2*r*r; const rules=[]; let cnt=0,label='',types='';
+  if(A||B||C){
+    cnt=1; const parts=[];
+    if(A){ const rA=Math.max(H.minA,parseInt($('rate').value)||0); cnt=Math.max(cnt,Math.ceil(area/Math.min(rA*H.areaPerA_m2,DATA.maxAreaPerUnit_m2)),Math.ceil(area/cover(DATA.travelA_m))); parts.push(rA+'-A'); rules.push('حداکثر مسیر پیمایش تا خاموش‌کننده کلاس A: '+fa(DATA.travelA_m)+' متر.'); }
+    if(B||(C&&!A)){ cnt=Math.max(cnt,Math.ceil(area/cover(DATA.travelBfar_m))); parts.push(H.bFar+'-B'); }
+    if(B) rules.push('مایعات قابل اشتعال: رتبه '+fa(H.bFar)+'-B تا '+fa(DATA.travelBfar_m)+' متر؛ رتبه پایین‌تر فقط تا '+fa(DATA.travelBnear_m)+' متر.');
+    if(C){ parts.push('C'); rules.push('روی وسایل برقی روشن آب نزنید؛ از CO₂، پودر یا گاز پاک استفاده کنید.'); }
+    label=parts.join(':');
+    types = A&&!B&&!C ? 'پودر ABC یا آب تحت فشار یا فوم' : (!A&&(B||C)&&!(B&&C)) ? (C?'CO₂ یا پودر BC/ABC یا گاز پاک':'پودر BC/ABC یا CO₂ یا فوم') : 'پودر شیمیایی ABC (چندمنظوره)';
   }
-  if(hasD){
-    const t='پودر مخصوص کلاس D (نوع آن را با فلز موجود تطبیق دهید)';
-    html.push('<div class="card warn"><h2>فلزات قابل اشتعال (کلاس D)</h2><ul><li>'+t+'، دست‌کم یک عدد برای هر محل کار با فلز.</li><li>حداکثر '+fa(DATA.travelD_m)+' متر تا محل خطر.</li><li>آب، فوم و پودر ABC روی آتش فلزات خطرناک است.</li></ul></div>');
-    lines.push('کلاس D: '+t+'، حداکثر '+fa(DATA.travelD_m)+' متر تا محل خطر');
-  }
-  if(hasK){
-    const t='شیمیایی مرطوب (Wet chemical) کلاس K';
-    html.push('<div class="card warn"><h2>روغن پخت‌وپز (کلاس K)</h2><ul><li>'+t+'، دست‌کم یک عدد برای هر آشپزخانه یا گروه سرخ‌کن.</li><li>حداکثر '+fa(DATA.travelK_m)+' متر از محل پخت، و نه درست بالای آن.</li><li>هرگز روی روغن در حال سوختن آب نریزید.</li></ul></div>');
-    lines.push('کلاس K: '+t+'، حداکثر '+fa(DATA.travelK_m)+' متر از محل پخت');
-  }
-
-  const m=DATA.mount;
-  const place=[
-    'در مسیر خروج و نزدیک درها، دور از خود منبع خطر نصب کنید تا برای برداشتن لازم نباشد به آتش نزدیک شوید.',
-    'دسته خاموش‌کننده‌های تا ۱۸ کیلوگرم (۴۰ پوند) حداکثر '+fa(m.upTo40lb_m)+' متر از کف؛ سنگین‌تر از آن حداکثر '+fa(m.over40lb_m)+' متر.',
-    'پایین خاموش‌کننده دست‌کم '+fa(m.floorGap_cm)+' سانتی‌متر از کف فاصله داشته باشد.',
-    'جلوی آن را با کالا یا مبل نبندید، قفل نکنید و با تابلوی قابل‌دیدن مشخص کنید.',
-    'دمای محل با محدوده دمایی روی برچسب مطابقت داشته باشد.'
-  ];
-  html.push('<div class="card"><h2>محل نصب</h2><ul>'+place.map(r=>'<li>'+r+'</li>').join('')+'</ul></div>');
-  html.push('<div class="card"><h2>نگهداری</h2><ul>'+DATA.inspect.map(r=>'<li>'+r+'</li>').join('')+'</ul></div>');
-  html.push('<div class="card"><h2>هنگام آتش‌سوزی</h2><ul><li>اول افراد را خارج کنید و با آتش‌نشانی (۱۲۵) تماس بگیرید.</li><li>فقط اگر آتش کوچک است و مسیر فرار پشت سرتان باز است، خاموش‌کننده را به کار ببرید.</li><li>روش کار: پین را بکشید، نازل را به ریشه آتش بگیرید، دسته را فشار دهید، از کنار به کنار جارو کنید.</li><li>آتش گاز را خاموش نکنید مگر جریان گاز قطع شود.</li></ul></div>');
-  html.push('<p class="note">مبنا: آخرین نگارش NFPA 10 ویرایش ۲۰۲۶ است، ولی جدول‌های عددی این برنامه بر پایه نسخه‌های قبلی است و باید با متن ۲۰۲۶ و الزامات مرجع ذی‌صلاح محلی (مثل آتش‌نشانی و مقررات ملی ساختمان) تطبیق داده شود. این ابزار جایگزین طراحی و تأیید کارشناس ایمنی نیست.</p>');
-  html.push('<button class="alt" id="copy">کپی خلاصه</button>');
-  out.innerHTML=html.join('');
-  const text=['خلاصه انتخاب خاموش‌کننده',DATA.places.find(x=>x.id===$('place').value).n+' | خطر '+H.name+' | '+fa(area)+' متر مربع | '+fa(floors)+' طبقه','کلاس‌ها: '+[...sel].join('، '),...lines,'مبنا: NFPA 10 (نیازمند تطبیق با ویرایش ۲۰۲۶ و مرجع محلی)'].join('\n');
-  $('copy').onclick=async()=>{
-    try{ await navigator.clipboard.writeText(text); }catch(e){ const t=document.createElement('textarea'); t.value=text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
-    $('copy').textContent='کپی شد';
-  };
-  out.scrollIntoView({behavior:'smooth'});
+  return { name:$('name').value.trim()||z.n, zone:z.n, op:z.op, hz:H.name, cls:[...sel], area, floors, cnt, total:cnt*floors, label, types, rules, D, K };
 }
-$('go').onclick=calc;
+function resultHTML(r){
+  let h='';
+  if(r.cnt) h+='<div class="card"><h2>خاموش‌کننده اصلی</h2><div class="big">'+fa(r.cnt)+' عدد در هر طبقه</div><p>جمعاً '+fa(r.total)+' عدد برای '+fa(r.floors)+' طبقه</p><p>نوع: <b>'+r.types+'</b></p><p>حداقل رتبه روی برچسب: <span class="tag">'+r.label+'</span></p><ul>'+r.rules.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
+  if(r.D) h+='<div class="card w"><h2>فلزات قابل اشتعال (کلاس D)</h2><ul><li>پودر مخصوص کلاس D، منطبق با فلز موجود؛ حداقل ۱ عدد برای هر محل.</li><li>حداکثر '+fa(DATA.travelD_m)+' متر تا محل خطر.</li><li>آب، فوم و پودر ABC روی آتش فلزات خطرناک است.</li></ul></div>';
+  if(r.K) h+='<div class="card w"><h2>روغن پخت‌وپز (کلاس K)</h2><ul><li>شیمیایی مرطوب (Wet chemical)؛ حداقل ۱ عدد برای هر محل.</li><li>حداکثر '+fa(DATA.travelK_m)+' متر از محل پخت.</li><li>روی روغن در حال سوختن هرگز آب نریزید.</li></ul></div>';
+  if(r.op) h+='<div class="card w"><h2>ناحیه عملیاتی</h2><p>'+DATA.opNote+'</p></div>';
+  return h;
+}
+$('go').onclick=()=>{
+  const r=compute(); const out=$('out');
+  if(r.err){ current=null; out.innerHTML='<div class="card w">'+r.err+'</div>'; return; }
+  current=r; out.innerHTML=resultHTML(r)+'<button class="go" id="save">ذخیره در لیست</button><p class="note">'+DATA.source+'</p>';
+  $('save').onclick=()=>{ entries.push(current); store.set('hse_ext_entries',entries); $('save').textContent='ذخیره شد'; $('save').disabled=true; };
+  out.scrollIntoView({behavior:'smooth'});
+};
+
+/* لیست و گزارش */
+function reportText(){
+  const L=['گزارش خاموش‌کننده‌ها (NFPA 10)']; let main=0,k=0,d=0;
+  entries.forEach((e,i)=>{ L.push('', (i+1)+'. '+e.name+' | '+e.zone+' | خطر '+e.hz+' | '+fa(e.area)+' m² × '+fa(e.floors)+' طبقه', 'کلاس‌ها: '+e.cls.join('، '));
+    if(e.cnt){ L.push('اصلی: '+fa(e.total)+' عدد، '+e.types+'، رتبه '+e.label); main+=e.total; }
+    if(e.D){ L.push('کلاس D: حداقل ۱ عدد'); d++; } if(e.K){ L.push('کلاس K: حداقل ۱ عدد'); k++; } if(e.op) L.push('ناحیه عملیاتی: چرخ‌دار و سیستم ثابت جداگانه بررسی شود'); });
+  L.push('', 'جمع: '+fa(main)+' عدد اصلی'+(k?'، '+fa(k)+' عدد K':'')+(d?'، '+fa(d)+' عدد D':''), 'توجه: اعداد نیازمند تطبیق با NFPA 10:2026 و استاندارد داخلی است.');
+  return L.join('\n');
+}
+function renderList(){
+  const box=$('list');
+  if(!entries.length){ box.innerHTML='<div class="card"><h2>لیست خالی است</h2><p>در تب «محاسبه» یک محل را محاسبه کنید و «ذخیره در لیست» را بزنید.</p></div>'; return; }
+  let main=0; box.innerHTML=entries.map((e,i)=>{ main+=e.total||0;
+    return '<div class="card"><div class="item"><div><b>'+esc(e.name)+'</b><div class="note">'+esc(e.zone)+' · خطر '+esc(e.hz)+' · '+fa(e.area)+' m² × '+fa(e.floors)+' طبقه</div>'
+    +(e.cnt?'<div>'+fa(e.total)+' عدد <span class="tag">'+esc(e.label)+'</span></div>':'')+(e.D?'<div>کلاس D: حداقل ۱ عدد</div>':'')+(e.K?'<div>کلاس K: حداقل ۱ عدد</div>':'')
+    +'</div><button class="x" data-i="'+i+'">حذف</button></div></div>'; }).join('')
+    +'<div class="card w"><h2>جمع اصلی: '+fa(main)+' عدد</h2><p class="note">کلاس‌های D و K جدا شمرده می‌شوند.</p></div><button class="alt" id="cp">کپی گزارش</button><button class="alt" id="clr">پاک کردن لیست</button>';
+  box.querySelectorAll('.x').forEach(b=>b.onclick=()=>{ entries.splice(+b.dataset.i,1); store.set('hse_ext_entries',entries); renderList(); });
+  $('cp').onclick=async()=>{ const t=reportText(); try{ await navigator.clipboard.writeText(t); }catch(e){ const a=document.createElement('textarea'); a.value=t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); } $('cp').textContent='کپی شد'; };
+  $('clr').onclick=()=>{ if(confirm('همه موارد لیست پاک شود؟')){ entries=[]; store.set('hse_ext_entries',entries); renderList(); } };
+}
 </script>
 </body>
 </html>
